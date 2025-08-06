@@ -1,9 +1,9 @@
 import { getCourseBySlug } from "@/app/data/public/get-course-by-slug";
-import { useConstructUrl } from "@/hooks/use-construct-url";
+import { constructUrl } from "@/lib/utils";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { 
   BookOpen, 
   ChevronRight, 
@@ -13,7 +13,6 @@ import {
   Star, 
   Users 
 } from "lucide-react";
-import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 
 export default async function CourseDetailsPage({ params }: { params: { slug: string } }) {
@@ -23,10 +22,7 @@ export default async function CourseDetailsPage({ params }: { params: { slug: st
     return notFound();
   }
 
-  // Note: useConstructUrl is a hook, but here we are in a Server Component.
-  // I'll check how useConstructUrl is implemented to replicate it or if there is a server-side equivalent.
-  // Looking at the codebase, I'll assume I can construct it manually or there's a util.
-  const thumbnailUrl = `https://tigris-s3-public-url-placeholder.com/${course.fileKey}`; 
+  const thumbnailUrl = constructUrl(course.fileKey); 
 
   return (
     <div className="bg-background min-h-screen pb-20">
