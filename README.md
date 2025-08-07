@@ -124,13 +124,15 @@ Welcome! This repository showcases my journey in building a modern online learni
 
 * **Authentication:** ✅ Complete (Better Auth integration)
 * **Landing Page & Dashboard:** ✅ Prototyped
+* **Course Discovery:** ✅ Complete (Student course browsing catalog with search UI)
+* **Course Detail View:** ✅ Complete (Detailed landing pages with curriculum breakdown)
 * **Course Creation:** ✅ Admin tools with forms, rich text editor, file uploader (integrated with React Hook Form + Tigris S3)
 * **UI & Animations:** ✅ Core components styled
 * **API & DB:** ✅ Prisma schema & Neon connection working
 * **Server Actions:** ✅ Secure course creation with Arcjet rate-limiting and bot protection
 
 ### Upcoming Features
-* Student course browsing & enrollment
+* Student enrollment & course path tracking
 * Lecture viewing with sequential navigation
 * Quiz attempts with grading and progress tracking
 * Stripe integration for payments (optional bonus)
