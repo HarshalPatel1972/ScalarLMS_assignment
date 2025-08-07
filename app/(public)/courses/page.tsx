@@ -1,6 +1,8 @@
 import { getPublishedCourses } from "@/app/data/public/get-published-courses";
 import { CourseCard } from "./_components/CourseCard";
-import { BookOpen } from "lucide-react";
+import { BookOpen, Search, SlidersHorizontal } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 export default async function CoursesPage() {
   const courses = await getPublishedCourses();
@@ -19,6 +21,17 @@ export default async function CoursesPage() {
           <p className="text-lg text-muted-foreground leading-relaxed">
             Master new skills with our carefully curated content. From beginner basics to advanced concepts, start your learning journey today.
           </p>
+          
+          <div className="flex flex-col sm:flex-row gap-3 pt-4">
+             <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+                <Input placeholder="Search for courses, topics, or skills..." className="pl-10 h-12 bg-muted/20 border-muted-foreground/10 rounded-xl" />
+             </div>
+             <Button variant="outline" className="h-12 px-6 rounded-xl border-muted-foreground/10 gap-2">
+                <SlidersHorizontal className="size-4" />
+                Filters
+             </Button>
+          </div>
         </div>
         
         <div className="flex items-center gap-2 text-sm text-muted-foreground bg-muted/30 px-4 py-2 rounded-lg border border-muted-foreground/10">
