@@ -41,21 +41,19 @@ Welcome! This repository showcases my journey in building a modern online learni
 ---
 
 ## 🗂️ Project Structure
-app/
-├── (auth)/             # Auth pages: login, verification, etc.
-├── (public)/           # Landing, Navbar, dropdowns
-├── admin/              # Instructor dashboard, course creation
-├── courses/            # Students' view of available courses
-└── api/                # Authentication and backend endpoints
-
-components/
-├── sidebar/
-└── ui/                 # Buttons, cards, dialogs, form inputs, theme toggles (Shadcn UI)
-
-hooks/                  # Custom React hooks
-lib/                    # Business logic, validation, security (Arcjet, Zod, utils)
-prisma/                 # Prisma schema, client, and DB logic
-public/                 # Images, SVGs, branding
+- `app/`
+  - `(auth)/` - Authentication pages (login, verification, etc.)
+  - `(public)/` - Landing page, Navbar, dropdowns
+  - `(admin)/` - Instructor dashboard, course creation
+  - `(courses)/` - Students' view of available courses
+  - `(api)/` - Authentication and backend endpoints
+- `components/`
+  - `sidebar/`
+  - `ui/` - Buttons, cards, dialogs, form inputs, theme toggles (Shadcn UI)
+- `hooks/` - Custom React hooks
+- `lib/` - Business logic, validation, security (Arcjet, Zod, utils)
+- `prisma/` - Prisma schema, client, and DB logic
+- `public/` - Images, SVGs, branding
 
 **Notable new components:**
 * `editor.tsx` & `Menubar.tsx` → TipTap rich text editor for course descriptions
