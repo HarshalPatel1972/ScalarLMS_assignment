@@ -54,8 +54,15 @@ export function Navbar() {
               //   <p>logged in</p>
               <UserDropdown
                 email={session.user.email}
-                image={session.user.image || ""}
-                name={session.user.name}
+                image={
+                  session?.user.image ??
+                  `https://avatar.vercel.sh/${session?.user.email}`
+                }
+                name={
+                  session?.user.name && session.user.name.length > 0
+                    ? session.user.name.charAt(0).toUpperCase()
+                    : session?.user.email.split("@")[0]
+                }
               />
             ) : (
               <>

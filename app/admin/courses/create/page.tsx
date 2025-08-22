@@ -38,6 +38,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { categories } from "@arcjet/next";
+import { RichTextEditor } from "@/components/rich-text-editor/editor";
 
 export default function CourseCreationPage() {
   const form = useForm<CourseSchemaType>({
@@ -158,11 +159,12 @@ export default function CourseCreationPage() {
                   <FormItem className="w-full">
                     <FormLabel>Description</FormLabel>
                     <FormControl>
-                      <Textarea
+                      <RichTextEditor field={field} />
+                      {/* <Textarea
                         placeholder="Description"
                         {...field}
                         className="min-h-[120px]"
-                      />
+                      /> */}
                     </FormControl>
                     <FormMessage />
                   </FormItem>
