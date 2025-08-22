@@ -1,121 +1,147 @@
-🌐 Online Learning Platform – SDE Intern Project
-Welcome! This repository showcases my journey in building a robust, modern online learning platform as part of the SDE Intern hiring process. The project combines full-stack engineering, user-centric design, and security-first practices to deliver a polished experience for students and instructors.
+# 🌐 Online Learning Platform – SDE Intern Project
 
-🚀 Features & Highlights
-Two Roles, Tailored Experience:
+Welcome! This repository showcases my journey in building a modern online learning platform as part of the SDE Intern hiring process. The project combines **full-stack engineering, user-centric design, and security-first practices** to deliver a polished experience for both students and instructors.
 
-Instructors can create rich courses with readings and interactive quizzes.
+---
 
-Students can browse, attend lectures, complete quizzes, and track their own learning progress—step by step.
+## 🚀 Features & Highlights
 
-Sleek Interface:
+### Two Roles, Tailored Experience
+**Instructors** can create courses with rich content, including:
+* Readings
+* Quizzes (multiple-choice)
+* Rich text descriptions (via TipTap editor)
+* File uploads (images, PDFs) using drag-and-drop Uploader component
 
-Built with Shadcn UI for rapid development and clean user experience.
+**Students** can:
+* Browse available courses
+* Complete lectures sequentially
+* Attempt quizzes with real-time grading
+* Track their progress (X/Y lectures completed)
 
-Animated elements (using animate-spin) add feedback and a modern touch.
+### Sleek Interface
+* Built with **Shadcn UI** for a clean, responsive design
+* Animated elements (`animate-spin`) for feedback and modern feel
+* Theme toggle (light/dark) for accessibility and aesthetics
 
-Dynamic theme toggle for light/dark mode—because accessibility and aesthetics matter!
+### Instant Feedback
+* Real-time quiz grading
+* Toast notifications via **Sonner** for actions and errors
+* File upload errors handled gracefully with toast messages
 
-Instant Feedback:
+### Secure from the Start
+* Authentication and role-based authorization with **Better Auth**
+* API security with **Arcjet** (sliding window rate limiting)
 
-Real-time quiz grading and rich notifications via Sonner to keep users informed.
+### Type Safety & Performance
+* **T3 Env** ensures environment variables are validated at compile-time
+* **Prisma ORM** + **Neon Postgres** for reliable and scalable database management
+* Forms validated with **Zod** and **React Hook Form**
 
-Secure from the Start:
+---
 
-Authentication powered by Better Auth, protecting every route and user role.
-
-Arcjet integration for advanced rate limiting and security algorithms.
-
-Type Safety & Performance:
-
-Leveraging T3 Env for safe env variable use and compile-time validation.
-
-Using Neon as fast, scalable serverless Postgres—integrated with Prisma ORM.
-
-🗂️ Project Structure
-The codebase is modular and organized for scalability and maintainability.
-
-text
+## 🗂️ Project Structure
 app/
-  (auth)/                # Auth pages: login, verification, etc.
-  (public)/              # Landing, Navbar, dropdowns
-  admin/                 # Instructor dashboard, course creation
-  courses/               # Students' view of available courses
-  api/                   # Authentication and backend endpoints
+├── (auth)/             # Auth pages: login, verification, etc.
+├── (public)/           # Landing, Navbar, dropdowns
+├── admin/              # Instructor dashboard, course creation
+├── courses/            # Students' view of available courses
+└── api/                # Authentication and backend endpoints
 
 components/
-  sidebar/
-  ui/                    # Buttons, cards, dialogs & more (Shadcn UI)
-  ...
-hooks/                   # Custom React hooks
-lib/                     # Business logic, security, validation
-prisma/                  # Prisma schema and DB logic
-public/                  # Images, SVGs, branding
-README.md
-...
-🛠️ Setup
-Prerequisites:
-Node.js (v18+) - pnpm - Neon DB credentials - Better Auth keys
+├── sidebar/
+└── ui/                 # Buttons, cards, dialogs, form inputs, theme toggles (Shadcn UI)
 
-Steps:
+hooks/                  # Custom React hooks
+lib/                    # Business logic, validation, security (Arcjet, Zod, utils)
+prisma/                 # Prisma schema, client, and DB logic
+public/                 # Images, SVGs, branding
 
-Clone repo & install dependencies
+**Notable new components:**
+* `editor.tsx` & `Menubar.tsx` → TipTap rich text editor for course descriptions
+* `Uploader.tsx` → drag-and-drop file uploader with validation and toast feedback
 
-text
-git clone <repo-url>
-cd online-learning-platform
-pnpm install
-Configure .env using T3 Env guidelines.
+---
 
-Execute Prisma DB setup:
+## 🛠️ Setup Instructions
 
-text
-pnpm prisma generate
-pnpm prisma db push
-Start development server:
+### Prerequisites
+* [Node.js](https://nodejs.org/en/) v18+
+* [pnpm](https://pnpm.io/)
+* [Neon Postgres](https://neon.tech/) credentials
+* [Better Auth](https://better-auth.com/) keys
 
-text
-pnpm dev
-🧩 Why These Choices?
-Next.js (App Router) for unified SSR/CSR and future scalability.
+### Steps
+1.  **Clone the repo:**
+    ```bash
+    git clone [https://github.com/HarshalPatel1972/ScalarLMS_assignment.git](https://github.com/HarshalPatel1972/ScalarLMS_assignment.git)
+    cd ScalarLMS_assignment
+    ```
+2.  **Install dependencies:**
+    ```bash
+    pnpm install
+    ```
+3.  **Configure `.env` according to T3 Env guidelines:**
+    ```
+    DATABASE_URL=postgresql://<user>:<password>@<host>/<db>
+    BETTER_AUTH_SECRET=your-secret
+    ARCJET_API_KEY=your-key
+    NEXT_PUBLIC_APP_URL=http://localhost:3000
+    ```
+4.  **Setup Prisma DB:**
+    ```bash
+    pnpm prisma generate
+    pnpm prisma db push
+    ```
+5.  **Start development server:**
+    ```bash
+    pnpm dev
+    ```
 
-Shadcn UI & Origin UI for rapid UI development and delightful user experiences.
+---
 
-Arcjet for security by design—rate limiting with sliding window algorithms.
+## 🧩 Why These Choices?
 
-Prisma + Neon for smooth, cloud-based relational data management.
+* **Next.js (App Router)** → SSR/CSR flexibility and scalability
+* **Shadcn UI & Origin UI** → fast, reusable, polished UI components
+* **Arcjet** → advanced security (rate limiting, bot detection)
+* **Prisma + Neon** → cloud-hosted, relational database with easy ORM integration
+* **T3 Env** → ensures environment variables are type-safe
+* **Zod & React Hook Form** → type-safe, reliable form validation
+* **TipTap Rich Text Editor** → flexible course content editing
+* **Uploader.tsx** → simple, user-friendly file uploads
 
-T3 Env prevents configuration errors before they strike.
+---
 
-Zod & React Hook Form keep all forms reliable and robust.
+## 📈 Progress So Far
 
-📈 Progress So Far & What’s Next?
-Authentication: Done
+* **Authentication:** ✅ Complete (Better Auth integration)
+* **Landing Page & Dashboard:** ✅ Prototyped
+* **Course Creation:** ✅ Admin tools with forms, rich text editor, file uploader
+* **UI & Animations:** ✅ Core components styled
+* **API & DB:** ✅ Prisma schema & Neon connection working
 
-Landing & Dashboard: Prototyped
+### Upcoming Features
+* Student course browsing & enrollment
+* Lecture viewing with sequential navigation
+* Quiz attempts with grading and progress tracking
+* Stripe integration for payments (optional bonus)
+* Course search functionality
+* Responsive design for mobile & tablet
+* Analytics & richer dashboards
 
-Course Creation: Admin tools in progress
+---
 
-UI & Animations: Core components styled
+## 💡 Development Notes
 
-API & DB: Prisma schema, Neon connection working
+* Real commit history to reflect iterative development
+* ESLint & TypeScript for code quality
+* Modularized codebase for maintainability and future feature expansion
 
-Upcoming:
+---
 
-Quiz logic, progress tracking, file uploads, course search, responsive layouts, and richer analytics dashboards.
+## 📫 Submission & Contact
 
-💡 Development Notes
-Real commit history—reflecting my thought process and iteration.
+* Repository link: [`ScalarLMS_assignment`](https://github.com/HarshalPatel1972/ScalarLMS_assignment)
 
-ESLint for linting, clear code conventions everywhere.
-
-Modularized for future feature extensions.
-
-🎨 Screenshots & Previews (Coming Soon)
-As more features roll out, I’ll add screenshots/gifs showing the user experience, animations, and dashboard in action.
-
-📫 Submission & Contact
-Once completed, the repository will be submitted for review via the provided guidelines.
-If you want to see code samples, architecture diagrams, or deployment strategies, just ask!
-
-This README will evolve alongside the project. Stay tuned!
+*README will continue to evolve alongside the project.*
