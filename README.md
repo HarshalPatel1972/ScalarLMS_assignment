@@ -1,36 +1,130 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Scalar LMS – Online Learning Platform
+📌 Overview
 
-## Getting Started
+This is a simplified online learning management system (LMS) built as part of the SDE Intern Assignment. The platform supports two types of users — Instructors and Students.
 
-First, run the development server:
+Instructors can create courses and lectures (reading material or quizzes).
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
+Students can browse courses, complete lectures, take quizzes, and track their progress.
+
+The project is being developed as a full-stack application with authentication, authorization, progress tracking, and a clean UI.
+
+🚀 Tech Stack
+
+Frontend & Backend: Next.js 14 (App Router)
+
+Authentication & Authorization: Better-Auth
+
+UI Components: shadcn/ui
+, Sonner
+(toasts), Origin UI
+
+Database: Neon Postgres
+
+ORM: Prisma
+
+Security: Arcjet
+with sliding window rate limiting
+
+Validation: Zod
+, React Hook Form
+
+Env Management: T3 Env
+(compile-time environment validation)
+
+Package Manager: pnpm
+
+✨ Features Implemented (So Far)
+
+✅ Authentication (Better-Auth) with login & signup
+
+✅ Role-based access control (Instructor vs Student)
+
+✅ Landing page with Navbar, Dropdown, and Cards
+
+✅ Dashboard layout (in progress)
+
+✅ Course creation form (Instructor side, using React Hook Form + Zod validation)
+
+✅ Theming support (light/dark mode toggle with shadcn/ui)
+
+✅ Security via Arcjet (rate limiting with sliding window algorithm)
+
+✅ Prisma + Neon database connection with schema defined
+
+📂 Project Structure
+app/ # Next.js App Router pages
+(auth)/ # Authentication pages (login, verify)
+(public)/ # Public landing page
+admin/ # Instructor dashboard and course management
+api/ # API routes (auth, etc.)
+components/ # Reusable UI + Sidebar components
+hooks/ # Custom React hooks
+lib/ # Auth, DB, Env, Utils, Arcjet configs
+prisma/ # Prisma schema
+public/ # Static assets (logos, icons)
+
+⚙️ Setup Instructions
+
+Clone the repository
+
+git clone https://github.com/HarshalPatel1972/ScalarLMS_assignment.git
+cd ScalarLMS_assignment
+
+Install dependencies
+
+pnpm install
+
+Setup environment variables
+Create a .env file in the root with values like:
+
+DATABASE_URL=postgresql://<user>:<password>@<host>/<db>
+BETTER_AUTH_SECRET=your-secret
+ARCJET_API_KEY=your-key
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+
+Run Prisma migrations
+
+pnpm prisma migrate dev
+
+Start development server
+
 pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+🏗️ Architecture & Design
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Next.js App Router → Pages structured by route groups (auth, public, admin).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Server & Client Components → Used as per requirements (forms, DB queries, UI interactivity).
 
-## Learn More
+Authentication → Better-Auth integrated following official docs.
 
-To learn more about Next.js, take a look at the following resources:
+Database Modeling → Prisma schema defines users, courses, lectures, quizzes, and progress.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Security → Arcjet rate-limiting middleware to protect APIs.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Validation → Zod + React Hook Form for type-safe form handling.
 
-## Deploy on Vercel
+🔮 Work In Progress
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Student course browsing & enrollment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Lecture viewing & sequential navigation
+
+Quiz attempts with grading (70% pass rule)
+
+Student progress tracking (X/Y lectures completed)
+
+Stripe integration for payments (bonus feature)
+
+Instructor file uploads (bonus feature)
+
+📜 Submission Details
+
+Assignment: Scalar LMS – Online Learning Platform (SDE Intern Project)
+
+Repository: ScalarLMS_assignment
+
+Commit History: Includes step-by-step implementation progress
+
+👉 This README will be updated as development progresses.
