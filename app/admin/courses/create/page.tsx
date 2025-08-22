@@ -39,6 +39,7 @@ import {
 } from "@/components/ui/select";
 import { categories } from "@arcjet/next";
 import { RichTextEditor } from "@/components/rich-text-editor/editor";
+import { Uploader } from "@/components/file-uploader/Uploader";
 
 export default function CourseCreationPage() {
   const form = useForm<CourseSchemaType>({
@@ -180,7 +181,8 @@ export default function CourseCreationPage() {
                   <FormItem className="w-full">
                     <FormLabel>Thumbnail image</FormLabel>
                     <FormControl>
-                      <Input placeholder="thumbnail url" {...field} />
+                      <Uploader />
+                      {/* <Input placeholder="thumbnail url" {...field} /> */}
                     </FormControl>
                     <FormMessage />
                   </FormItem>
