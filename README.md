@@ -17,20 +17,20 @@ Authentication & Authorization: Better-Auth
 
 UI Components: shadcn/ui
 , Sonner
-(toasts), Origin UI
+ (toasts), Origin UI
 
 Database: Neon Postgres
 
 ORM: Prisma
 
 Security: Arcjet
-with sliding window rate limiting
+ with sliding window rate limiting
 
 Validation: Zod
 , React Hook Form
 
 Env Management: T3 Env
-(compile-time environment validation)
+ (compile-time environment validation)
 
 Package Manager: pnpm
 
@@ -53,16 +53,16 @@ Package Manager: pnpm
 ✅ Prisma + Neon database connection with schema defined
 
 📂 Project Structure
-app/ # Next.js App Router pages
-(auth)/ # Authentication pages (login, verify)
-(public)/ # Public landing page
-admin/ # Instructor dashboard and course management
-api/ # API routes (auth, etc.)
-components/ # Reusable UI + Sidebar components
-hooks/ # Custom React hooks
-lib/ # Auth, DB, Env, Utils, Arcjet configs
-prisma/ # Prisma schema
-public/ # Static assets (logos, icons)
+app/                # Next.js App Router pages
+  (auth)/           # Authentication pages (login, verify)
+  (public)/         # Public landing page
+  admin/            # Instructor dashboard and course management
+  api/              # API routes (auth, etc.)
+components/         # Reusable UI + Sidebar components
+hooks/              # Custom React hooks
+lib/                # Auth, DB, Env, Utils, Arcjet configs
+prisma/             # Prisma schema
+public/             # Static assets (logos, icons)
 
 ⚙️ Setup Instructions
 
@@ -71,9 +71,11 @@ Clone the repository
 git clone https://github.com/HarshalPatel1972/ScalarLMS_assignment.git
 cd ScalarLMS_assignment
 
+
 Install dependencies
 
 pnpm install
+
 
 Setup environment variables
 Create a .env file in the root with values like:
@@ -83,9 +85,11 @@ BETTER_AUTH_SECRET=your-secret
 ARCJET_API_KEY=your-key
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 
+
 Run Prisma migrations
 
 pnpm prisma migrate dev
+
 
 Start development server
 
