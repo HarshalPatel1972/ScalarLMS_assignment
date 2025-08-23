@@ -155,7 +155,7 @@ export default function CourseCreationPage() {
               {/* Description */}
               <FormField
                 control={form.control}
-                name="Description"
+                name="description"
                 render={({ field }) => (
                   <FormItem className="w-full">
                     <FormLabel>Description</FormLabel>
@@ -181,7 +181,7 @@ export default function CourseCreationPage() {
                   <FormItem className="w-full">
                     <FormLabel>Thumbnail image</FormLabel>
                     <FormControl>
-                      <Uploader />
+                      <Uploader onChange={field.onChange} value={field.value} />
                       {/* <Input placeholder="thumbnail url" {...field} /> */}
                     </FormControl>
                     <FormMessage />
