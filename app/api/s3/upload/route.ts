@@ -5,6 +5,11 @@ import { z } from "zod";
 import { v4 as uuidv4 } from "uuid";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { S3 } from "@/lib/S3Client";
+import arcjet, { detectBot, fixedWindow } from "@/lib/arcjet";
+import { headers } from "next/headers";
+import { auth } from "@/lib/auth";
+import { error } from "console";
+import { requireAdmin } from "@/app/data/admin/require-admin";
 
 export const fileUploadSchema = z.object({
   fileName: z.string().min(1, { message: "Filename is required" }),
@@ -13,8 +18,40 @@ export const fileUploadSchema = z.object({
   isImage: z.boolean(),
 });
 
+//lets setup arcjet
+const aj = arcjet
+  .withRule(
+    detectBot({
+      mode: "LIVE",
+      allow: [], //no bot is allowed to interact
+    })
+  )
+  .withRule(
+    fixedWindow({
+      mode: "LIVE",
+      window: "1m",
+      max: 5,
+    })
+  );
+
 export async function POST(request: Request) {
+  //lets invoke arcjet
+  // const session = await auth.api.getSession({
+  //   headers: await headers(),
+  // });
+
+  //now we dont require const session, now we need to verify if a user is admin or not through require-admin.ts
+  const session = await requireAdmin();
+
   try {
+    const decision = await aj.protect(request, {
+      fingerprint: session?.user.id as string,
+    });
+
+    if (decision.isDenied()) {
+      return NextResponse.json({ error: "Dude not good" }, { status: 429 });
+    }
+
     const body = await request.json();
     const validation = fileUploadSchema.safeParse(body);
 
