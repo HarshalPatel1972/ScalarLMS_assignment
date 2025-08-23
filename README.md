@@ -33,6 +33,12 @@ Welcome! This repository showcases my journey in building a modern online learni
 * Authentication and role-based authorization with **Better Auth**
 * API security with **Arcjet** (sliding window rate limiting)
 
+### File Uploads with Tigris
+* Integrated **Tigris S3-compatible storage** for file uploads
+* `Uploader.tsx` supports drag-and-drop with validation (size, count, type)
+* Files uploaded securely via presigned URLs
+* Integrated with **React Hook Form** for seamless course creation workflows
+
 ### Type Safety & Performance
 * **T3 Env** ensures environment variables are validated at compile-time
 * **Prisma ORM** + **Neon Postgres** for reliable and scalable database management
@@ -52,12 +58,15 @@ Welcome! This repository showcases my journey in building a modern online learni
   - `ui/` - Buttons, cards, dialogs, form inputs, theme toggles (Shadcn UI)
 - `hooks/` - Custom React hooks
 - `lib/` - Business logic, validation, security (Arcjet, Zod, utils)
+- `lib/S3Client.ts` - Tigris S3 client configuration
+- `lib/actions.ts` - Server actions (course creation with Arcjet protection)
 - `prisma/` - Prisma schema, client, and DB logic
 - `public/` - Images, SVGs, branding
 
 **Notable new components:**
 * `editor.tsx` & `Menubar.tsx` → TipTap rich text editor for course descriptions
 * `Uploader.tsx` → drag-and-drop file uploader with validation and toast feedback
+* `AdminCourseCard.tsx` → instructor course card with edit, preview, and delete actions
 
 ---
 
@@ -115,9 +124,10 @@ Welcome! This repository showcases my journey in building a modern online learni
 
 * **Authentication:** ✅ Complete (Better Auth integration)
 * **Landing Page & Dashboard:** ✅ Prototyped
-* **Course Creation:** ✅ Admin tools with forms, rich text editor, file uploader
+* **Course Creation:** ✅ Admin tools with forms, rich text editor, file uploader (integrated with React Hook Form + Tigris S3)
 * **UI & Animations:** ✅ Core components styled
 * **API & DB:** ✅ Prisma schema & Neon connection working
+* **Server Actions:** ✅ Secure course creation with Arcjet rate-limiting and bot protection
 
 ### Upcoming Features
 * Student course browsing & enrollment
@@ -127,6 +137,8 @@ Welcome! This repository showcases my journey in building a modern online learni
 * Course search functionality
 * Responsive design for mobile & tablet
 * Analytics & richer dashboards
+* Course editing and deletion workflows
+* File preview and management for uploaded assets
 
 ---
 
