@@ -79,3 +79,16 @@ export async function editCourse(
     };
   }
 }
+
+
+export async function reorderCourse(
+  chapterId:string.
+  lessons: {id:string; position:number}[],
+  courseId:string
+){
+  try {
+
+  }catch{
+    
+  }
+}
