@@ -102,6 +102,9 @@ model Course {
   //add this after adding thr 1 : M relation to user model
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
+
+  // relationship
+  chapters Chapter[]
 }
 
 // type safe
@@ -116,4 +119,37 @@ enum CourseStatus {
   Draft
   Published
   Archive
+}
+
+// chapters and lessons
+model Chapter{
+  id String @id @default(uuid())
+
+  title String
+  position Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+
+  courseId  String
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  // relation
+  lessons Lesson[]
+}
+
+model Lesson{
+  id String @id @default(uuid())
+
+  title String
+  description String?
+  thumbnailKey String?
+  videoKey String?
+  position Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  chapterId   String
+  chapter     Chapter  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
 }
