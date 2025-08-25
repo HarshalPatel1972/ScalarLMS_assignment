@@ -6,6 +6,7 @@ import { prisma } from "@/lib/db";
 import { ApiResponse } from "@/lib/types";
 import arcjet, { detectBot, fixedWindow } from "@/lib/arcjet";
 import { request } from "@arcjet/next";
+import { revalidatePath } from "next/cache";
 
 //lets setup arcjet
 const aj = arcjet
@@ -80,15 +81,90 @@ export async function editCourse(
   }
 }
 
-
-export async function reorderCourse(
-  chapterId:string.
-  lessons: {id:string; position:number}[],
-  courseId:string
-){
+export async function reorderLessons(
+  chapterId: string,
+  lessons: { id: string; position: number }[],
+  courseId: string
+): Promise<ApiResponse> {
+  //authorizing the public end points
+  await requireAdmin();
   try {
+    if (!lessons || lessons.length === 0) {
+      return {
+        status: "error",
+        message: "No lessons provided for reordering",
+      };
+    }
 
-  }catch{
-    
+    const updates = lessons.map((lesson) =>
+      prisma.lesson.update({
+        where: {
+          id: lesson.id,
+          chapterId: chapterId,
+        },
+        data: {
+          position: lesson.position,
+        },
+      })
+    );
+
+    await prisma.$transaction(updates);
+
+    revalidatePath(`/admin/courses/${courseId}/edit`);
+
+    return {
+      status: "success",
+      message: "Lessons reordered successfully",
+    };
+  } catch {
+    return {
+      status: "error",
+      message: "Failed to reorder lessons",
+    };
+  }
+}
+
+export async function reorderChapters(
+  courseId: string,
+  chapters: {
+    id: string;
+    position: number;
+  }[]
+): Promise<ApiResponse> {
+  //authorizing the public end points
+  await requireAdmin();
+  try {
+    if (!chapters || chapters.length === 0) {
+      return {
+        status: "error",
+        message: "No chapters provided for reordering.",
+      };
+    }
+
+    const updates = chapters.map((chapter) =>
+      prisma.chapter.update({
+        where: {
+          id: chapter.id,
+          courseId,
+        },
+        data: {
+          position: chapter.position,
+        },
+      })
+    );
+
+    await prisma.$transaction(updates);
+
+    revalidatePath(`/admin/courses/${courseId}/edit`);
+
+    return {
+      status: "success",
+      message: "Chapters reordered successfully",
+    };
+  } catch {
+    return {
+      status: "error",
+      message: "Failed to reorder chapters",
+    };
   }
 }
