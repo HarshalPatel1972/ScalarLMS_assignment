@@ -3,6 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   DndContext,
+  DragEndEvent,
   DraggableSyntheticListeners,
   KeyboardSensor,
   PointerSensor,
@@ -17,7 +18,7 @@ import {
   useSortable,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { CSS } from "@dnd-kit/utilities";
 import { AdminCourseSingularType } from "@/app/data/admin/admin-get-course";
 import {
@@ -36,6 +37,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { toast } from "sonner";
+import { reorderChapters, reorderLessons } from "../actions";
 
 interface iAppProps {
   data: AdminCourseSingularType;
@@ -68,6 +70,29 @@ export function CourseStructure({ data }: iAppProps) {
     })) || []; //because there might not be any chapter
 
   const [items, setItems] = useState(initialItems);
+
+  //syncing the client and server
+  useEffect(() => {
+    setItems((prevItems) => {
+      const updatedItems =
+        data.chapters.map((chapter) => ({
+          id: chapter.id,
+          title: chapter.title,
+          order: chapter.position,
+          isOpen:
+            prevItems.find((item) => item.id === chapter.id)?.isOpen ?? true,
+          lessons: chapter.lessons.map((lesson) => ({
+            id: lesson.id,
+            title: lesson.title,
+            order: lesson.position,
+          })),
+        })) || [];
+
+      return updatedItems;
+    });
+  }, [data]);
+
+  //above useEffect will only run wif the data is updated
 
   //sorting function
   function SortableItem({ children, id, className, data }: SortableItemProps) {
@@ -110,7 +135,7 @@ export function CourseStructure({ data }: iAppProps) {
     );
   }
 
-  function handleDragEnd(event) {
+  function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
 
     //early exit because the position didnt change
@@ -158,7 +183,35 @@ export function CourseStructure({ data }: iAppProps) {
       const previousItem = [...items]; //we are creating a backup because what if the api call fails? because of obvious reasons then we need the old data
 
       setItems(updatedChapterForState);
+
+      //server action for chapters
+      if (courseId) {
+        //we only need to update id and position
+        const chaptersToUpdate = updatedChapterForState.map((chapter) => ({
+          id: chapter.id,
+          position: chapter.order,
+        }));
+
+        const reorderPromise = () =>
+          reorderChapters(courseId, chaptersToUpdate);
+
+        toast.promise(reorderPromise(), {
+          loading: "Reordering chapters...",
+          success: (result) => {
+            if (result.status === "success") return result.message;
+            throw new Error(result.message);
+          },
+
+          error: () => {
+            setItems(previousItem);
+            return "Failed to reorder chapters";
+          },
+        });
+      }
+
+      return;
     }
+
     //lesson handling
     if (activeType === "lesson" && overType === "lesson") {
       const chapterId = active.data.current?.chapterId;
@@ -224,7 +277,24 @@ export function CourseStructure({ data }: iAppProps) {
           id: lesson.id,
           position: lesson.order,
         }));
+
+        const reorderedLessonsPromise = () =>
+          reorderLessons(chapterId, lessonsToUpdate, courseId);
+
+        toast.promise(reorderedLessonsPromise(), {
+          loading: "Reordering Lessons...",
+          success: (result) => {
+            if (result.status === "success") return result.message;
+            throw new Error(result.message);
+          },
+          error: () => {
+            setItems(previousItem); //setting back to the prev state if promise fails
+            return "Failed to reorder lesson";
+          },
+        });
       }
+
+      return; //do no continue any further
     }
   }
 
