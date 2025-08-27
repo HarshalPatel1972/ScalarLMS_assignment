@@ -28,7 +28,7 @@ import { toast } from "sonner";
 
 export function NewChapterModal({ courseId }: { courseId: string }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [pending, startTransition] = useTransition;
+  const [pending, startTransition] = useTransition();
 
   const form = useForm<ChapterSchemaType>({
     resolver: zodResolver(chapterSchema),
