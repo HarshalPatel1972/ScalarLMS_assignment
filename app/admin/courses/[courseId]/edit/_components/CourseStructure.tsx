@@ -38,6 +38,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { toast } from "sonner";
 import { reorderChapters, reorderLessons } from "../actions";
+import { NewChapterModal } from "./NewChapterModal";
 
 interface iAppProps {
   data: AdminCourseSingularType;
@@ -67,7 +68,8 @@ export function CourseStructure({ data }: iAppProps) {
         title: lesson.title,
         order: lesson.position,
       })),
-    })) || []; //because there might not be any chapter
+    })) || [];
+  //because there might not be any chapter
 
   const [items, setItems] = useState(initialItems);
 
@@ -315,6 +317,8 @@ export function CourseStructure({ data }: iAppProps) {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between border-b border-border">
           <CardTitle>Chapters</CardTitle>
+          {/* here we get the new chapter modal */}
+          <NewChapterModal courseId={data.id} />
         </CardHeader>
         <CardContent className="space-y-8">
           <SortableContext items={items} strategy={verticalListSortingStrategy}>
